@@ -1,0 +1,60 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
+
+// Classe qui représente une citation
+class Citation {
+    private String texte;
+    private String auteur;
+
+    public Citation(String texte, String auteur) {
+        this.texte = texte;
+        this.auteur = auteur;
+    }
+
+    public void afficher() {
+        System.out.println("\n« " + texte + " »");
+        System.out.println("   — " + auteur);
+    }
+}
+
+// Classe qui gère la liste et le tirage aléatoire
+class GenerateurCitations {
+    private List<Citation> citations = new ArrayList<>();
+    private Random random = new Random();
+
+    public GenerateurCitations() {
+        ajouter("La connaissance s'acquiert par l'expérience, tout le reste n'est que de l'information.", "Albert Einstein");
+        ajouter("Il n'y a qu'une façon d'échouer, c'est d'abandonner avant d'avoir réussi.", "Georges Clemenceau");
+        ajouter("Le plus grand risque est de ne prendre aucun risque.", "Mark Zuckerberg");
+        ajouter("Ce que l'on conçoit bien s'énonce clairement.", "Nicolas Boileau");
+        ajouter("Le succès, c'est d'aller d'échec en échec sans perdre son enthousiasme.", "Winston Churchill");
+        ajouter("Ce n'est pas parce que les choses sont difficiles que nous n'osons pas, c'est parce que nous n'osons pas qu'elles sont difficiles.", "Sénèque");
+    }
+
+    public void ajouter(String texte, String auteur) {
+        citations.add(new Citation(texte, auteur));
+    }
+
+    public Citation tirerAuHasard() {
+        return citations.get(random.nextInt(citations.size()));
+    }
+}
+
+// Programme principal
+public class AppCitations {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        GenerateurCitations generateur = new GenerateurCitations();
+
+        System.out.println("=== Générateur de citations aléatoires ===");
+        while (true) {
+            System.out.print("\nAppuie sur Entrée pour une citation (ou 'q' pour quitter) : ");
+            String choix = sc.nextLine().trim();
+            if (choix.equalsIgnoreCase("q")) break;
+            generateur.tirerAuHasard().afficher();
+        }
+        System.out.println("À bientôt !");
+    }
+}
